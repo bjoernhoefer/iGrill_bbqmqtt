@@ -8,6 +8,5 @@ Monitor your iGrill_v2 with a Raspberry Pi (3) - and an forward it to an mqtt-se
 
 ### Software
 
-[bluepy](https://github.com/IanHarvey/bluepy)
-
-[paho mqtt](https://pypi.python.org/pypi/paho-mqtt/1.1)
+* [bluepy](https://github.com/IanHarvey/bluepy)
+* [paho mqtt](https://pypi.python.org/pypi/paho-mqtt/1.1)
