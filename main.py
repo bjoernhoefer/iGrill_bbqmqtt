@@ -2,11 +2,9 @@ import bluepy.btle as btle
 import binascii
 import paho.mqtt.client as mqtt
 
-# Please insert your details here
-address = "d4:81:ca:12:12:12"
-printoutloud = False
+address = "d4:81:ca:23:67:a1"
+printoutloud = True
 mqtt_server = "mqtt"
-# Stop editing here - unless you know what you do ;-)
 
 class grillDelegate(btle.DefaultDelegate):
  def handleNotification(self, cHandle, data):
@@ -35,6 +33,18 @@ class grillDelegate(btle.DefaultDelegate):
    if printoutloud:
     print "Probe 4: ", temperature, "(Hex Value: ", formatedData[0:len(formatedData)-4], ")"
    client.publish("bbq/probe4", temperature)
+
+  elif cHandle == 82:
+   batteryvalue = int(formatedData,16)
+   if printoutloud:
+    print "Battery: ", batteryvalue, "(Hex Value: ", formatedData, ")"
+   client.publish("bbq/battery", batteryvalue)
+
+  else:
+   if printoutloud:
+    print "Unknown cHandle: ", cHandle, " - Value: ", formatedData
+   client.publish("bbq/unknown/handle", cHandle)
+   client.publish("bbq/unknown/value", formatedData)
 
 igrill = btle.Peripheral( address )
 igrill.setDelegate(grillDelegate())
